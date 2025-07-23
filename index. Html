@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TejrakshaNet - Coming Soon</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght=300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #000000; /* Pure black background */
+            color: #ffffff; /* Pure white text */
+            overflow-x: hidden; /* Prevent horizontal scroll */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh; /* Ensure body takes full viewport height */
+            position: relative; /* For animated background */
+        }
+
+        /* Animated Background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.05) 0%, transparent 30%),
+                        radial-gradient(circle at bottom right, rgba(255, 255, 255, 0.05) 0%, transparent 30%);
+            animation: subtleBackground 20s infinite alternate ease-in-out;
+            z-index: -1; /* Behind content */
+        }
+
+        @keyframes subtleBackground {
+            0% { background-position: 0% 0%; }
+            100% { background-position: 100% 100%; }
+        }
+
+        .main-content {
+            flex-grow: 1; /* Allow main content to grow and push footer down */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem; /* Add some padding */
+        }
+        .hero-section {
+            background: linear-gradient(135deg, #111111, #333333); /* Dark gray gradient */
+            min-height: 65vh; /* Slightly increased height */
+            display: flex;
+            flex-direction: column; /* Stack content vertically */
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            border-radius: 1.5rem; /* More rounded corners */
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8); /* Stronger, deeper shadow */
+            margin: 2rem auto; /* Center the section with margin */
+            max-width: 950px; /* Slightly wider */
+            width: 100%;
+            padding: 3rem 2rem; /* Increased padding */
+        }
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6); /* Darker overlay */
+            z-index: 1;
+            border-radius: 1.5rem; /* Match parent border-radius */
+        }
+        .hero-content {
+            z-index: 2;
+            text-align: center;
+            animation: fadeInScale 1.8s ease-out forwards; /* Slower animation */
+            opacity: 0;
+            transform: scale(0.9); /* Slightly smaller initial scale */
+            padding: 2rem; /* Padding inside content */
+        }
+        @keyframes fadeInScale {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding-bottom: 0.5rem;
+            font-weight: 800; /* Bolder title */
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 0;
+            transform: translateX(-50%);
+            width: 80px; /* Wider accent line */
+            height: 4px; /* Thicker accent line */
+            background-color: #dddddd; /* Light gray accent */
+            border-radius: 9999px;
+        }
+
+        /* Countdown Timer Styling */
+        .countdown-container {
+            display: flex;
+            justify-content: center;
+            gap: 2rem; /* Space between timer units */
+            margin-top: 2rem;
+            margin-bottom: 3rem;
+            z-index: 2; /* Above overlay */
+        }
+        .countdown-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent black */
+            padding: 1.5rem 1rem;
+            border-radius: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            min-width: 90px; /* Ensure consistent width */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+            transition: transform 0.2s ease-in-out;
+        }
+        .countdown-item:hover {
+            transform: translateY(-5px);
+        }
+        .countdown-item .value {
+            font-size: 3.5rem; /* Larger digits */
+            font-weight: 900; /* Extra bold */
+            color: #ffffff;
+            line-height: 1;
+        }
+        .countdown-item .label {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #bbbbbb;
+            text-transform: uppercase;
+            margin-top: 0.5rem;
+        }
+
+        /* Contact Form Styling (retained and slightly enhanced) */
+        .form-container {
+            background-color: #111111; /* Dark gray background for form container */
+            border: 1px solid #333333; /* Medium gray border */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5); /* Stronger shadow */
+            padding: 2.5rem; /* More padding */
+            border-radius: 1rem; /* More rounded */
+        }
+        .form-input, .form-select {
+            background-color: #000000; /* Pure black input background */
+            border: 1px solid #444444; /* Darker gray border */
+            color: #ffffff; /* Pure white text */
+            padding: 0.85rem 1.25rem;
+            border-radius: 0.75rem;
+            width: 100%;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url('data:image/svg+xml;utf8,<svg fill="%23ffffff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>');
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1.2em;
+        }
+        .form-input:focus, .form-select:focus {
+            outline: none;
+            border-color: #bbbbbb;
+            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.15);
+        }
+        .form-label {
+            color: #dddddd;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem; /* Increased gap */
+            margin-top: 0.75rem;
+        }
+        .radio-option {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        .radio-option input[type="radio"] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #555555;
+            border-radius: 50%;
+            outline: none;
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+            position: relative;
+            margin-right: 0.5rem;
+        }
+        .radio-option input[type="radio"]:checked {
+            background-color: #ffffff;
+            border-color: #ffffff;
+        }
+        .radio-option input[type="radio"]:checked::before {
+            content: '';
+            display: block;
+            width: 10px;
+            height: 10px;
+            background-color: #000000;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .radio-option label {
+            color: #dddddd;
+            cursor: pointer;
+        }
+        .btn-primary {
+            background: linear-gradient(45deg, #333333, #000000);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            border: 1px solid #555555;
+            padding: 0.9rem 2rem; /* More padding */
+            font-size: 1.125rem; /* text-lg */
+            font-weight: 700; /* Bolder text */
+        }
+        .btn-primary:hover {
+            background: linear-gradient(45deg, #000000, #333333);
+            transform: translateY(-4px); /* More pronounced lift */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7); /* Even more pronounced shadow on hover */
+        }
+        .message-box {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #111111;
+            color: #ffffff;
+            padding: 15px 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .message-box.show {
+            opacity: 1;
+        }
+
+        /* Responsive adjustments for countdown */
+        @media (max-width: 640px) { /* Small screens */
+            .countdown-container {
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+            .countdown-item {
+                min-width: 70px;
+                padding: 1rem 0.5rem;
+            }
+            .countdown-item .value {
+                font-size: 2.5rem;
+            }
+            .countdown-item .label {
+                font-size: 0.8rem;
+            }
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+            .hero-content p {
+                font-size: 1rem;
+            }
+            .hero-content .text-2xl {
+                font-size: 1.5rem;
+            }
+            .hero-content .text-lg {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Message Box for alerts -->
+    <div id="messageBox" class="message-box hidden"></div>
+
+    <!-- Header (simplified for coming soon page) -->
+    <header class="bg-[#111111] py-4 shadow-lg">
+        <div class="container mx-auto flex justify-center items-center px-4">
+            <a href="#" class="text-3xl font-extrabold text-white tracking-wider">
+                TejrakshaNet<span class="text-white">.</span>
+            </a>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <!-- Coming Soon Section -->
+        <section id="coming-soon" class="hero-section">
+            <div class="hero-overlay"></div>
+            <div class="hero-content max-w-4xl px-6">
+                <h1 class="text-5xl md:text-6xl font-extrabold text-white mb-6 leading-tight">
+                    TejrakshaNet is <span class="text-white">Coming Soon!</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-[#eeeeee] mb-4">
+                    Get ready for advanced cyber security solutions.
+                </p>
+
+                <!-- Countdown Timer -->
+                <div id="countdown" class="countdown-container">
+                    <div class="countdown-item">
+                        <div class="value" id="days">00</div>
+                        <div class="label">Days</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="value" id="hours">00</div>
+                        <div class="label">Hours</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="value" id="minutes">00</div>
+                        <div class="label">Minutes</div>
+                    </div>
+                    <div class="countdown-item">
+                        <div class="value" id="seconds">00</div>
+                        <div class="label">Seconds</div>
+                    </div>
+                </div>
+
+                <p class="text-2xl md:text-3xl font-semibold text-white mb-8">
+                    Official Launch: <span class="text-[#dddddd]">15 June 2026</span>
+                </p>
+                <p class="text-lg md:text-xl text-[#aaaaaa] mb-10">
+                    Actively Launching: <span class="font-medium">1 July 2026</span>
+                </p>
+                <p class="text-lg text-[#dddddd] mb-8">
+                    Stay tuned for updates and be among the first to experience unparalleled digital protection.
+                </p>
+            </div>
+        </section>
+    </div>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 md:py-24 bg-[#000000]">
+        <div class="container mx-auto px-4 max-w-2xl">
+            <h2 class="text-4xl font-bold text-center text-white mb-12 section-title">Get Notified or Ask a Question</h2>
+            <form id="contactForm" class="form-container p-8 rounded-xl" action="https://formspree.io/f/mrhackershivansh143@gmail.com" method="POST">
+                <div class="mb-6">
+                    <label for="name" class="block form-label text-lg mb-2">Your Name</label>
+                    <input type="text" id="name" name="name" class="form-input" placeholder="Enter your name" required>
+                </div>
+                <div class="mb-6">
+                    <label for="email" class="block form-label text-lg mb-2">Your Email</label>
+                    <input type="email" id="email" name="_replyto" class="form-input" placeholder="Enter your email" required>
+                </div>
+                <div class="mb-6 relative">
+                    <label for="subject" class="block form-label text-lg mb-2">Subject of your inquiry</label>
+                    <select id="subject" name="_subject" class="form-select" required>
+                        <option value="" disabled selected>Select a subject</option>
+                        <option value="My Softwares & Tools">My Softwares & Tools</option>
+                        <option value="Cyber Attack Prevention">Cyber Attack Prevention</option>
+                        <option value="Device Strengthening">Device Strengthening</option>
+                        <option value="Investment & Evidence Recovery">Investment & Evidence Recovery</option>
+                        <option value="General Inquiry">General Inquiry</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="mb-6">
+                    <label class="block form-label text-lg mb-2">I need security for:</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" id="purposePersonal" name="purpose" value="Personal Devices" required>
+                            <label for="purposePersonal">Personal Devices</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="purposeBusiness" name="purpose" value="Business / Company">
+                            <label for="purposeBusiness">Business / Company</label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" id="purposeGovernment" name="purpose" value="Government / Public Sector">
+                            <label for="purposeGovernment">Government / Public Sector</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <label for="message" class="block form-label text-lg mb-2">Your Message</label>
+                    <textarea id="message" name="message" rows="6" class="form-input resize-y" placeholder="Type your message here..." required></textarea>
+                </div>
+                <button type="submit" class="btn-primary w-full py-3 rounded-lg text-white font-semibold text-lg">
+                    Send Message
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#000000] py-8 text-[#aaaaaa] text-center text-sm">
+        <div class="container mx-auto px-4">
+            <p>&copy; 2025 TejrakshaNet. All rights reserved.</p>
+            <p class="mt-2">Designed with <span class="text-white">&hearts;</span> for a Secure Digital World.</p>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript for countdown timer and form handling
+
+        // Function to show a custom message box (no longer used for form submission success)
+        function showMessageBox(message) {
+            const messageBox = document.getElementById('messageBox');
+            messageBox.textContent = message;
+            messageBox.className = `message-box show`;
+            setTimeout(() => {
+                messageBox.className = 'message-box hidden';
+            }, 3000); // Hide after 3 seconds
+        }
+
+        // Countdown Timer Logic
+        const launchDate = new Date('June 15, 2026 00:00:00').getTime();
+
+        const countdownInterval = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = launchDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById('days').innerHTML = String(days).padStart(2, '0');
+            document.getElementById('hours').innerHTML = String(hours).padStart(2, '0');
+            document.getElementById('minutes').innerHTML = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').innerHTML = String(seconds).padStart(2, '0');
+
+            if (distance < 0) {
+                clearInterval(countdownInterval);
+                document.getElementById('countdown').innerHTML = '<div class="text-3xl font-bold text-white">LAUNCHED!</div>';
+                document.getElementById('launchingSoonText').innerHTML = 'TejrakshaNet is now live!';
+            }
+        }, 1000);
+
+        // Contact Form Submission (handled by Formspree)
+        // No client-side JS needed for submission itself, Formspree handles it directly.
+        // If you want to show a message after Formspree redirects, you'd configure Formspree's redirect URL.
+    </script>
+</body>
+</html>
